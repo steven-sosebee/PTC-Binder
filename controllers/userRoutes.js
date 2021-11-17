@@ -20,7 +20,7 @@ router.get("/binders", withAuth, async (req, res) => {
     const binderData = await Binder.findAll({
       where: { user_id: req.session.user_id },
     });
-    if (binderData.length > 1) {
+    if (binderData.length > 0) {
       let scripts = [
         { src: "/js/logout.js" },
         { src: "/js/index.js" },
