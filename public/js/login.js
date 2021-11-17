@@ -12,14 +12,10 @@ const loginFormHandler = async (event) => {
       headers: { "Content-Type": "application/json" },
     });
     console.log(response);
-    // console.log("User logged in...");
     if (response.ok) {
       const response = await fetch("/user/login", {
         method: "GET",
       });
-      // alert("Go catch 'em all...");
-      // document.location.replace("/");
-      // localStorage.setItem("userName", user_name);
     } else {
       alert("Username or password were incorrect...");
     }

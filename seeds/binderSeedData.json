@@ -4,7 +4,19 @@
     "user_id": 1
   },
   {
-    "binder_name": "Shiny",
+    "binder_name": "Brock's Binder",
+    "user_id": 2
+  },
+  {
+    "binder_name": "Gym Battles",
     "user_id": 1
+  },
+  {
+    "binder_name": "Favorites",
+    "user_id": 2
+  },
+  {
+    "binder_name": "Wish List",
+    "user_id": 2
   }
 ]

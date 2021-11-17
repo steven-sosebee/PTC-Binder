@@ -61,18 +61,12 @@ router.post("/login", async (req, res) => {
       //   logged_in: true,
       //   scripts,
       // });
-      res
-        .status(200)
-        .json({
-          userId: req.session.user_id,
-          logged_in: req.session.logged_in,
-        });
     });
-
-    // console.log("User is logged in...");
-    // res.render("dashboard", {
-    //   logged_in: req.session.logged_in,
-    // });
+    res.status(200).json({
+      userId: req.session.user_id,
+      logged_in: req.session.logged_in,
+    });
+    return;
   } catch (err) {
     res.status(400).json(err);
   }
@@ -90,30 +84,12 @@ router.post("/logout", (req, res) => {
 
 router.get("/binders", async (req, res) => {
   try {
-    if (!req.session.user_id) {
-      res.status(201);
-    }
+    const user_id = req.body.user_id;
     const binderData = await Binder.findAll({
-      where: { user_id: req.session.user_id },
+      where: { user_id: user_id },
     });
-    // if (binderData.length > 0) {
-    // console.log(binderData);
     const binders = binderData.map((binder) => binder.get({ plain: true }));
-    // console.log("Plain data...");
-    // console.log(binders);
     res.status(200).json(binders);
-    // res.render("userPage", {
-    //   binders,
-    //   logged_in: req.session.logged_in,
-    // });
-    // } else {
-    //   res.render("login", {
-    //     logged_in: req.session.logged_in,
-    //     scripts,
-    //   });
-    // }
-
-    // res.status(200).json(binderData);
   } catch (err) {
     res.status(400).json(err);
   }

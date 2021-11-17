@@ -86,21 +86,12 @@ router.get("/get/:binderid", async (req, res) => {
           model: Card,
         },
       ],
-      // where: {
-      //   binder_id: req.params.binderid,
-      // },
     });
-    console.log(binderData.dataValues.cards);
     const cards = binderData.dataValues.cards.map((data) =>
       data.get({ plain: true })
     );
-    // console.log(cards);
-    // res.render("binder", {
-    //   cards,
-    //   logged_in: req.session.user_id,
-    // });
-
-    res.status(200).json(binderData);
+    // console.log(binderData);
+    res.status(200).json(cards);
   } catch (err) {
     res.status(400).json(err);
   }
