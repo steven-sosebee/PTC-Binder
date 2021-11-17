@@ -23,25 +23,22 @@ router.put("/addcard/", async (req, res) => {
   }
 });
 
-router.put(
-  "/addcard/:cardname/:description/:pId/:cardImg/:api",
-  async (req, res) => {
-    try {
-      const cardData = await Card.create({
-        card_name: req.paramscardname,
-        description: req.params.description,
-        pokemon_id: req.params.pId,
-        card_img_url: req.params.cardImg,
-        card_api_id: req.params.api,
-      });
-      // console.log(cardBinderData);
-      res.status(200).json({
-        message: "Card added...",
-        data: { cardData },
-      });
-    } catch (err) {
-      res.status(400).json(err);
-    }
+router.put("/addcard/", async (req, res) => {
+  try {
+    const cardData = await Card.create({
+      card_name: req.body.card_name,
+      description: req.body.description,
+      pokemon_id: req.body.pokemon_id,
+      card_img_url: req.body.card_img_url,
+      card_api_id: req.body.card_api_id,
+    });
+    // console.log(cardBinderData);
+    res.status(200).json({
+      message: "Card added...",
+      data: { cardData },
+    });
+  } catch (err) {
+    res.status(400).json(err);
   }
-);
+});
 module.exports = router;
