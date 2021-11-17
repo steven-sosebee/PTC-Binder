@@ -4,11 +4,6 @@ const { User, Binder, Card } = require("../../models");
 // Create a new user
 router.post("/", async (req, res) => {
   try {
-    let scripts = [
-      { src: "/js/logout.js" },
-      { src: "/js/index.js" },
-      { src: "/js/binderActions.js" },
-    ];
     const userData = await User.create(req.body);
 
     req.session.save(() => {
@@ -20,11 +15,7 @@ router.post("/", async (req, res) => {
       //   message: "You are now logged in!",
       //   session: req.session,
       // });
-      res.status(200);
-      res.render("dashboard", {
-        logged_in: true,
-        scripts,
-      });
+      res.status(200).json(req.session.user_id, req.session.logged_in);
     });
     // res
     //   .render("dashboard", {
@@ -39,11 +30,6 @@ router.post("/", async (req, res) => {
 // Login as an existing user
 router.post("/login", async (req, res) => {
   try {
-    let scripts = [
-      { src: "/js/logout.js" },
-      { src: "/js/index.js" },
-      { src: "/js/binderActions.js" },
-    ];
     const userData = await User.findOne({
       where: { user_name: req.body.user_name },
     });
@@ -71,11 +57,16 @@ router.post("/login", async (req, res) => {
       //   message: "You are now logged in!",
       //   session: req.session,
       // });
-      res.render("dashboard", {
-        logged_in: true,
-        scripts,
-      });
-      res.status(200);
+      // res.render("dashboard", {
+      //   logged_in: true,
+      //   scripts,
+      // });
+      res
+        .status(200)
+        .json({
+          userId: req.session.user_id,
+          logged_in: req.session.logged_in,
+        });
     });
 
     // console.log("User is logged in...");
@@ -99,36 +90,28 @@ router.post("/logout", (req, res) => {
 
 router.get("/binders", async (req, res) => {
   try {
-    let scripts = [
-      { src: "/js/login.js" },
-      { src: "/js/index.js" },
-      { src: "/js/binderActions.js" },
-    ];
-    const binderData = await Binder.findAll(
-      { where: { user_id: req.session.user_id } }
-      // include: [
-      //   {
-      //     model: Card,
-      //   },
-      // ],
-    );
-    if (binderData.length > 1) {
-      console.log(binderData);
-      console.log("Retrieving plain data...");
-      const binders = binderData.map((binder) => binder.get({ plain: true }));
-      // console.log("Plain data...");
-      // console.log(binders);
-      res.status(200).json(binders);
-      // res.render("userPage", {
-      //   binders,
-      //   logged_in: req.session.logged_in,
-      // });
-    } else {
-      res.render("login", {
-        logged_in: req.session.logged_in,
-        scripts,
-      });
+    if (!req.session.user_id) {
+      res.status(201);
     }
+    const binderData = await Binder.findAll({
+      where: { user_id: req.session.user_id },
+    });
+    // if (binderData.length > 0) {
+    // console.log(binderData);
+    const binders = binderData.map((binder) => binder.get({ plain: true }));
+    // console.log("Plain data...");
+    // console.log(binders);
+    res.status(200).json(binders);
+    // res.render("userPage", {
+    //   binders,
+    //   logged_in: req.session.logged_in,
+    // });
+    // } else {
+    //   res.render("login", {
+    //     logged_in: req.session.logged_in,
+    //     scripts,
+    //   });
+    // }
 
     // res.status(200).json(binderData);
   } catch (err) {

@@ -4,7 +4,9 @@ const binderRoutes = require("./binderRoutes");
 const inventoryRoutes = require("./InventoryRoutes");
 // const ptcRoutes = require("./PTCcall");
 // const cartRoutes = require("./cartRoutes");
+const cardRoutes = require("./cardRoutes");
 
+router.use("/cards", cardRoutes);
 router.use("/users", userRoutes);
 router.use("/binder", binderRoutes);
 router.use("/inventory", inventoryRoutes);

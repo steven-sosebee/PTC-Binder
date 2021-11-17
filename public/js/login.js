@@ -14,7 +14,10 @@ const loginFormHandler = async (event) => {
     console.log(response);
     // console.log("User logged in...");
     if (response.ok) {
-      alert("Go catch 'em all...");
+      const response = await fetch("/user/login", {
+        method: "GET",
+      });
+      // alert("Go catch 'em all...");
       // document.location.replace("/");
       // localStorage.setItem("userName", user_name);
     } else {
