@@ -6,16 +6,15 @@ const loginFormHandler = async (event) => {
   const passwordEl = document.querySelector("#password-login").value.trim();
 
   if (user_name && passwordEl) {
-    const response = await fetch("/api/users/login", {
+    console.log("Checking credentials...");
+    const login = await fetch("/api/users/login", {
       method: "POST",
       body: JSON.stringify({ user_name, password: passwordEl }),
       headers: { "Content-Type": "application/json" },
     });
-    console.log(response);
-    if (response.ok) {
-      const response = await fetch("/user/login", {
-        method: "GET",
-      });
+    console.log("Rendering page...");
+    if (login.ok) {
+      document.location.replace("/user/login");
     } else {
       alert("Username or password were incorrect...");
     }

@@ -42,7 +42,6 @@ router.post("/login", async (req, res) => {
     }
 
     const validPassword = await userData.checkPassword(req.body.password);
-    console.log(validPassword);
     if (!validPassword) {
       res.status(400).json({ message: "Incorrect password, please try again" });
       return;
@@ -51,21 +50,12 @@ router.post("/login", async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.user_id;
       req.session.logged_in = true;
-      // console.log(req.session);
-      // res.json({
-      //   user: userData,
-      //   message: "You are now logged in!",
-      //   session: req.session,
-      // });
-      // res.render("dashboard", {
-      //   logged_in: true,
-      //   scripts,
-      // });
+      req.session.user_name = userData.user_name;
+      res.json({ user_id: userData.user_id, message: "User is logged in..." });
     });
-    res.status(200).json({
-      userId: req.session.user_id,
-      logged_in: req.session.logged_in,
-    });
+
+    console.log("User logged in...");
+    // console.log(session.user_id);
     return;
   } catch (err) {
     res.status(400).json(err);
@@ -85,11 +75,17 @@ router.post("/logout", (req, res) => {
 router.get("/binders", async (req, res) => {
   try {
     const user_id = req.body.user_id;
+
     const binderData = await Binder.findAll({
       where: { user_id: user_id },
     });
     const binders = binderData.map((binder) => binder.get({ plain: true }));
-    res.status(200).json(binders);
+    req.session.save(() => {
+      res.status(200).json({ message: "Success" });
+    });
+    console.log("Returning the Binders data...");
+    // console.log(binders);
+    // return;
   } catch (err) {
     res.status(400).json(err);
   }

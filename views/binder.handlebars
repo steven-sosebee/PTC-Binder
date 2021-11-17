@@ -3,7 +3,11 @@
     <div class="card-group justify-content-evenly">
       {{#each cards as |card|}}
         <div class="card" style="min-width: 12rem; flex-grow: 0;">
-          <img src={{card_img_url}} class="card-img-top" alt={{card_name}} />
+          <img
+            src={{card_img_url}}
+            class="cards card-img-top"
+            alt={{card_name}}
+          />
           <div class="card-body">
             <h5 class="card-title">{{card_name}}</h5>
             <p class="card-text">{{description}}</p>

@@ -2,11 +2,12 @@ const router = require("express").Router();
 const withAuth = require("../utils/auth");
 const { Binder } = require("../models");
 
-router.get("/login", withAuth, async (req, res) => {
+router.get("/login", async (req, res) => {
   try {
-    res.status(200);
-    res.render("dashboard", {
+    res.status(200).render("dashboard", {
       logged_in: true,
+      user_id: req.session.user_id,
+      user_name: req.session.user_name,
     });
     return;
   } catch (err) {
