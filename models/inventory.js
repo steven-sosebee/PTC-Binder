@@ -22,9 +22,9 @@ Inventory.init(
     price: {
       type: DataTypes.DECIMAL,
       allowNull: false,
-      validate: {
-        isnumerical: true,
-      },
+      // validate: {
+      //   isnumerical: true,
+      // },
     },
     // card_id: {
     //   type: DataTypes.INTEGER,
