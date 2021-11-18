@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { Inventory, Card } = require("../models");
 const withAuth = require("../utils/auth");
 
-router.get("/", withAuth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     let scripts = [
       { src: "/js/logout.js" },
