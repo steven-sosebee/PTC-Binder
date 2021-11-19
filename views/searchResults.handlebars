@@ -34,7 +34,11 @@
     </div>
   </div>
 
-  <div class="pokemonCard"></div>
+  <div class="pokemonCard">
+    {{#each searchResults as |card|}}
+    {{>card-details}}
+{{/each}}
+  </div>
 </div>
 <!-- Modal Structure -->
 <div class="modal" id="myModal">
@@ -58,5 +62,5 @@
   type="text/javascript"
   src="https://code.jquery.com/jquery-2.1.1.min.js"
 ></script>
-<script src="js/pokeapi.js"></script>
-<script src="js/pokeapi2.js"></script>
+<script src="/js/pokeapi.js"></script>
+<script src="/js/pokeapi2.js"></script>
